@@ -1,0 +1,1 @@
+console.error("Error: Parsing file /Users/Krishay/Documents/TestProject/app/app.js: Unexpected token (12:0)");

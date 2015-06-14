@@ -6,7 +6,7 @@ SalesTableView.prototype.render = function(model, options){
 	this.model = model;
 	this.options = options;
 	this.meta = model.meta;
-console.log(model);
+	console.log(model);
 	
 	var g = this.addTableGroup();
 	model.columns.forEach((function(col){		
@@ -14,7 +14,7 @@ console.log(model);
 	}).bind(this));
 	this.selectDefaultColumn();
 	this.addColumnEventHandlers();
-	this.showRowsForCurrentSelection();
+	this.showRowsForCurrentSelection();	
 }
 
 SalesTableView.prototype.addTableGroup = function(){

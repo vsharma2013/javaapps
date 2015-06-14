@@ -1,0 +1,28 @@
+{
+  "name": "TestProject",
+  "version": "1.0.0",
+  "description": "My First test project",
+  "moduleType": [
+    "amd",
+    "es6",
+    "globals",
+    "node",
+    "yui"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "react": "~0.13.3",
+    "react-bootstrap": "~0.23.2",
+    "d3": "~3.5.5",
+    "bootstrap": "~3.3.4",
+    "jquery": "~2.1.4",
+    "underscore": "~1.8.3"
+  }
+}

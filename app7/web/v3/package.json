@@ -1,0 +1,37 @@
+{
+  "name": "testproject",
+  "version": "1.0.0",
+  "description": "My first project in react.js",
+  "main": "index.js",
+  "scripts": {
+    "start": "jsx --watch app/ build/ | watchify -o ./build/bundle.js -v -d ./build/app.js",
+    "build": "browserify . -t [envify --NODE_ENV production] | uglifyjs -cm > js/bundle.min.js",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/varun86b4u/reactFirst.git"
+  },
+  "keywords": [
+    "react.js"
+  ],
+  "author": "Varun Aggarwal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/varun86b4u/reactFirst/issues"
+  },
+  "homepage": "https://github.com/varun86b4u/reactFirst#readme",
+  "dependencies": {
+    "bower": "^1.4.1",
+    "d3": "^3.5.5",
+    "grunt": "^0.4.5",
+    "react": "^0.13.3",
+    "watchify": "^3.2.2"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-jshint": "^0.11.2",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-watchify": "^0.1.0"
+  }
+}
