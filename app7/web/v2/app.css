@@ -13,23 +13,25 @@ body{
 .searchbar-container{
 	position:relative;
 	height : 10%;
-	padding : 10px 0px 10px 9px;
+	padding : 2px 0px 0px 0px;
 }
 
 #tbSearch{
 	position:relative;
-	left : 12%;
+	left : 1%;
 	width : 50%;
 	height : 30px;
 	border-radius: 2px;
 	font-size: 15px;
+	top : -10px;
 }
 
 .search-icon{
 	position: relative;
 	float:left;
 	display:inline-block;
-	left:65%;
+	top:13px;
+	left:69%;
 	background-color: #4d5359;
 	border-radius:2px;
 }
@@ -41,15 +43,19 @@ body{
 
 .tree-container {
 	position : relative;
-	height : 100%;
-	width : 15%;
+	height : 94%;
+	width : 14%;
 	float : left;
+	background-color: #353535;
+	border-right-color: grey;
+	border-right-style: solid;
+	border-right-width: 1px;
 }
 
 .view-container{
 	position:relative;
 	height: 100%;
-	width : 85%;
+	width : 85.9%;
 	float : left;
 }
 
@@ -61,7 +67,7 @@ body{
 	position:relative;
 	height : 95%;
 	width : 100%;
-	background-color: rgba(52, 52, 62, 1);
+	background-color: #353535;
 
 }
 
@@ -72,7 +78,7 @@ body{
 .col-rect, .row-rect, .cell-rect{
 	stroke-width : 1px; 
 	stroke : grey; 
-	fill:rgba(52, 52, 62, 1);
+	fill:#353535;
 	cursor : pointer;
 }
 
@@ -99,6 +105,31 @@ body{
 	stroke : grey;
 }
 
+.snode-root-text{
+	color:grey;
+	cursor:pointer;
+	font-size:20px;
+	fill:grey;
+}
+
+.snode-text{
+	color:grey;
+	cursor:pointer;
+	font-size:15px;
+	fill:grey;
+}
+
+.snode-text-select{
+	color:white;
+	cursor:pointer;
+	font-size:17px;
+	fill:white;
+}
+
+.snode-marker-line{
+	stroke : grey;
+	stroke-width : 1px;
+}
 
 
 
@@ -117,6 +148,21 @@ body{
 
 
 
+
+
+
+
+
+
+
+
+
+.cell-rect-1{
+	stroke-width : 1px; 
+	stroke : grey; 
+	cursor : pointer;
+	fill : #653040;
+}
 .cell-rect-2{
 	stroke-width : 1px; 
 	stroke : grey; 
@@ -165,7 +211,7 @@ body{
 	cursor : pointer;
 	fill : #c5718b;
 }
-.cell-rect-1{
+.cell-rect-10{
 	stroke-width : 1px; 
 	stroke : grey; 
 	cursor : pointer;

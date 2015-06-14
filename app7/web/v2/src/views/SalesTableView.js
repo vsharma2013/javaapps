@@ -20,7 +20,7 @@ SalesTableView.prototype.render = function(model, options){
 SalesTableView.prototype.addTableGroup = function(){
 	var transform = 'translate(' + this.options.frmStartX  + ',' + this.options.frmStartY + ') scale(1, -1)';
 	var css = 'sales-table-group';	
-	var g = d3.selectAll('svg')
+	var g = d3.select('.svg-container').select('.svg-view')
 			  .append('g')
 			  .attr({
 			  	transform : transform,
