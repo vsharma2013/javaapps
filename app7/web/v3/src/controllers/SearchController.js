@@ -69,34 +69,80 @@ SearchController.prototype.getDateDetails = function(results){
 			dist : 'yearly'
 		}
 	}
-	var arr = [];
+	var arr = [], fuzzyArr = [];
 	var filters = results.query.filters.and.concat(results.query.filters.or);
+	var hasFrom = false;
+	var hasTo = false;
 	filters.forEach(function(f){
 		if(f.filter.isDate){
 			arr.push(f.filter.value);
+			fuzzyArr.push(f.filter);
+			if(f.filter.operator === 'from') hasFrom = true;
+			if(f.filter.operator === 'to') hasTo = true;
 		}
 	});
 
-	if(arr.length < 2)
+	if(hasFrom && hasTo){
+		var details = {
+			startDate : arr[0],
+			endDate : arr[1],
+			dist : 'yearly'
+		};
+		var diff = new Date(arr[1]) - new Date (arr[0]);
+		var dDays = diff/(1000 * 60 * 60 * 24);
+
+		if(dDays < 61)
+			details.dist = 'daily'
+		else if(dDays < 366)
+			details.dist = 'monthly'
+
+		return details;
+	}
+	return this.getFuzzyDateDetails(fuzzyArr);
+}
+
+SearchController.prototype.getFuzzyDateDetails = function(filters){
+	if(filters.length !== 1)
 		return {
 			startDate : '2000/01/01',
 			endDate : '2014/12/31',
 			dist : 'yearly'
 		}
 
+	var op = filters[0].operator;
+	var filterValue = filters[0].value;
+	var dateRange = {};
+	if(op === 'in last'){
+		var nVal = parseInt(filterValue.match(/\d+/)[0]);
+		if(filterValue.indexOf('years') !== -1 || filterValue.indexOf('year') !== -1){
+			var dtNow = new Date('2014/12/31');
+			dateRange.startDate = dtNow.getFullYear() - nVal + '/' + (dtNow.getMonth() + 1) + '/' + dtNow.getDate();
+			dateRange.endDate = dtNow.getFullYear() + '/' + (dtNow.getMonth() + 1) + '/' + dtNow.getDate();
+		}
+		else{
+			var tsnMonthsBack = Date.parse('2014/12/31') - (1000 * 60 * 60 * 24 * 30 * nVal);
+			var dtnMonthsBack = new Date(tsnMonthsBack);
+			var dtNow = new Date('2014/12/31');
+			dateRange.startDate = dtnMonthsBack.getFullYear()+ '/' + (dtnMonthsBack.getMonth() + 1) + '/' + dtnMonthsBack.getDate();
+			dateRange.endDate = dtNow.getFullYear() + '/' + (dtNow.getMonth() + 1) + '/' + dtNow.getDate();
+		}
+	}
+	else{
+		dateRange.startDate = filterValue + '/01/01';
+		dateRange.endDate = filterValue + '/12/31';
+	}
 	var details = {
-		startDate : arr[0],
-		endDate : arr[1],
+		startDate : dateRange.startDate,
+		endDate : dateRange.endDate,
 		dist : 'yearly'
 	};
-	var diff = new Date(arr[1]) - new Date (arr[0]);
+	var diff = new Date(dateRange.endDate) - new Date (dateRange.startDate);
 	var dDays = diff/(1000 * 60 * 60 * 24);
 
 	if(dDays < 61)
 		details.dist = 'daily'
 	else if(dDays < 366)
 		details.dist = 'monthly'
-
 	return details;
 }
 
