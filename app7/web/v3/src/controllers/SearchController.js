@@ -115,14 +115,14 @@ SearchController.prototype.getFuzzyDateDetails = function(filters){
 	if(op === 'in last'){
 		var nVal = parseInt(filterValue.match(/\d+/)[0]);
 		if(filterValue.indexOf('years') !== -1 || filterValue.indexOf('year') !== -1){
-			var dtNow = new Date('2014/12/31');
+			var dtNow = new Date('2015/01/01');
 			dateRange.startDate = dtNow.getFullYear() - nVal + '/' + (dtNow.getMonth() + 1) + '/' + dtNow.getDate();
 			dateRange.endDate = dtNow.getFullYear() + '/' + (dtNow.getMonth() + 1) + '/' + dtNow.getDate();
 		}
 		else{
-			var tsnMonthsBack = Date.parse('2014/12/31') - (1000 * 60 * 60 * 24 * 30 * nVal);
+			var tsnMonthsBack = Date.parse('2015/01/01') - (1000 * 60 * 60 * 24 * 30 * nVal);
 			var dtnMonthsBack = new Date(tsnMonthsBack);
-			var dtNow = new Date('2014/12/31');
+			var dtNow = new Date('2015/01/01');
 			dateRange.startDate = dtnMonthsBack.getFullYear()+ '/' + (dtnMonthsBack.getMonth() + 1) + '/' + dtnMonthsBack.getDate();
 			dateRange.endDate = dtNow.getFullYear() + '/' + (dtNow.getMonth() + 1) + '/' + dtNow.getDate();
 		}
