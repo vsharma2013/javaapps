@@ -126,12 +126,46 @@ ESQueryBuilder.prototype.getBoolFilteredQuery = function(){
 		}
 	}
 }
+
+ESQueryBuilder.prototype.getMatchAllWithMultiAndFilters = function(){
+	return {
+		index: 'companysales',
+		type: 'sales',
+		body: {
+			query: {
+				filtered: {
+					query :{
+						match_all: {
+						}
+					},
+					filter : {
+						and : [
+							{term : {'type' : 'Laptop'}},
+							{term : {'brand': 'Apple'}},
+							{
+								range:{
+									timestamp : {
+										gte : '2010/01/01',
+										lte : '2010/12/31'
+									}
+								}
+							}
+						]
+					}
+
+				}		
+			},
+			size:100,
+			_source : true
+		}
+	}
+}
 ESQueryBuilder.prototype.executeQuery = function(url, cbOnDone){
 	$.getJSON(url, cbOnDone);
 	return;
 
-	// var esQuery = this.getBoolFilteredQuery();
-	// this.client.search(esQuery).then(this.onQueryResponse.bind(this, cbOnDone), this.onQueryError.bind(this));	
+	 // var esQuery = this.getMatchAllWithMultiAndFilters();
+	 // this.client.search(esQuery).then(this.onQueryResponse.bind(this, cbOnDone), this.onQueryError.bind(this));	
 }
 
 ESQueryBuilder.prototype.onQueryResponse = function(cbOnDone, data){
