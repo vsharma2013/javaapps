@@ -111,79 +111,10 @@ SearchController.prototype.getQueryString = function(queryParams){
 	var orgQuery = apiRes.query.query;
 	var qSource = apiRes.results[0].qSource;
 	var qTarget = apiRes.results[0].qTarget;
-	var regionTypes = ['regions', 'states', 'cities', 'region', 'state', 'city'];
-	var productTypes = ['categories', 'types', 'brands', 'models', 'category', 'type', 'brand', 'model'];
-
-	function isProductType(p){
-		return productTypes.indexOf(p) !== -1;
-	}
-
-	function isRegionType(t){
-		return regionTypes.indexOf(t) !== -1;
-	}
-	var q = '';
-	if(!qTarget){
-		if(isProductType(queryParams.type)){
-			if(isProductType(qSource.key)){
-				//Single word product drill down  search
-				q = queryParams.label;
-			}
-			else{
-				//product drilldown in region
-				q = queryParams.label + ' in ' + qSource.value; 
-			}
-		}
-		else{
-			if(isRegionType(qSource.key)){
-				//Single word region drill down  search
-				q = queryParams.label;
-			}
-			else{
-				//Org query now in region
-				q = qSource.value  + ' in ' + queryParams.label;
-			}
-		}
-	}
-	else{
-		if(isProductType(queryParams.type)){
-			//Drilldown product in region search
-			q = queryParams.label + ' in ' + qTarget.value;
-		}
-		else{
-			//Org query now in region drilldown
-			q = qSource.value  + ' in ' + queryParams.label;
-		}
-	}
-	q += this.getTimeFilterSuffix(queryParams);
-	return q;
-}
-
-SearchController.prototype.getTimeFilterSuffix = function(queryParams){
-	if(queryParams.source !== 'timeline') return '';
-	var map = {
-		'Jan' : { m : 1, d : 31},
-		'Feb' : { m : 2, d : 28},
-		'Mar' : { m : 3, d : 31},
-		'Apr' : { m : 4, d : 30},
-		'May' : { m : 5, d : 31},
-		'Jun' : { m : 6, d : 30},
-		'Jul' : { m : 7, d : 31},
-		'Aug' : { m : 8, d : 31},
-		'Sep' : { m : 9, d : 30},
-		'Oct' : { m : 10, d : 31},
-		'Nov' : { m : 11, d : 30},
-		'Dec' : { m : 12, d : 31}
-	};
-	if(queryParams.tKey.indexOf('-') !== -1){
-		var arr = queryParams.tKey.split('-');
-		var year = 2000 + parseInt(arr[1]);
-		var month = map[arr[0]].m;
-		var date = map[arr[0]].d;
-		return ' between ' + year + '/' + month + '/01 and ' + year + '/' + month + '/' + date;
-	}
-	else{
-		return ' between ' + queryParams.tKey + '/01/01 and ' + queryParams.tKey + '/12/31';
-	}
+	var filters = apiRes.query.filters? apiRes.query.filters.and : null;
+	var queryStr = getQueryString(queryParams, qSource, qTarget, filters);
+	$('#tbSearch').val(queryStr)
+	this.appController.executeQuery();
 }
 
 SearchController.prototype.getOutlierData = function(params, cbOnDataReceived){
